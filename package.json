@@ -1,0 +1,19 @@
+{
+  "name": "kotodama",
+  "version": "0.0.1",
+  "description": "(*´ω｀*)",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabazusi/kotodama.git"
+  },
+  "author": "sabazusi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sabazusi/kotodama/issues"
+  },
+  "homepage": "https://github.com/sabazusi/kotodama#readme"
+}
