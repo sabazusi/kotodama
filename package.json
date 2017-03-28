@@ -4,7 +4,7 @@
   "description": "(*´ω｀*)",
   "main": "dist/index.js",
   "scripts": {
-    "start": "",
+    "start": "electron dist/index.js",
     "build": "babel src -d dist",
     "lint": ""
   },
@@ -22,5 +22,8 @@
     "babel-cli": "^6.24.0",
     "babel-preset-es2017": "^6.22.0",
     "babel-preset-latest": "^6.24.0"
+  },
+  "dependencies": {
+    "electron": "^1.6.2"
   }
 }
