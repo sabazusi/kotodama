@@ -1,11 +1,13 @@
-export const windowSize = {
-  initial: {
+const windowSize = {
+  INITIAL: {
     width: 300,
     height: 300,
     show: false,
     resizable: false,
     movable: true,
     alwaysOnTop: true,
-    frame: false
-  }
+    frame: false,
+  },
 };
+
+export default windowSize;
