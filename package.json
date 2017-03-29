@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron dist/index.js",
     "build": "babel src -d dist",
-    "lint": ""
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,12 @@
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-preset-es2017": "^6.22.0",
-    "babel-preset-latest": "^6.24.0"
+    "babel-preset-latest": "^6.24.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3"
   },
   "dependencies": {
     "electron": "^1.6.2"
