@@ -29,6 +29,7 @@
     "eslint-plugin-react": "^6.10.3"
   },
   "dependencies": {
-    "electron": "^1.6.2"
+    "electron": "^1.6.2",
+    "electron-json-storage": "^3.0.2"
   }
 }
