@@ -3,8 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var windowSize = exports.windowSize = {
-  initial: {
+var windowSize = {
+  INITIAL: {
     width: 300,
     height: 300,
     show: false,
@@ -14,3 +14,5 @@ var windowSize = exports.windowSize = {
     frame: false
   }
 };
+
+exports.default = windowSize;
