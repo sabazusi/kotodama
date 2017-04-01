@@ -27,15 +27,24 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _electron.app.on('ready', function () {
-  _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {});
-  var initialWindow = new _electron.BrowserWindow(_browserWindow2.default.INITIAL);
   var memoWindowList = [];
+
+  // Listen from initialWindow
+  _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
+    var newMemo = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
+    memoWindowList.push(newMemo);
+    newMemo.show();
+  });
+  _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
+    _electron.app.exit();
+  });
+  var initialWindow = new _electron.BrowserWindow(_browserWindow2.default.INITIAL);
 
   _electronJsonStorage2.default.get(Keys.MEMO_LIST, function (error, data) {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
       data.list.forEach(function (memo) {
-        memoWindowList.push(new _electron.BrowserWindow({}));
+        memoWindowList.push(new _electron.BrowserWindow(_browserWindow2.default.MEMO));
       });
     }
   });

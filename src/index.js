@@ -6,20 +6,24 @@ import * as Keys from './constants/storage';
 import windowSize from './constants/browser-window';
 
 app.on('ready', () => {
+  const memoWindowList = [];
+
   // Listen from initialWindow
   ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
+    const newMemo = new BrowserWindow(windowSize.MEMO);
+    memoWindowList.push(newMemo);
+    newMemo.show();
   });
   ipcMain.on(IPCMessage.EXIT_APP, () => {
     app.exit();
   });
   const initialWindow = new BrowserWindow(windowSize.INITIAL);
-  const memoWindowList = [];
 
   storage.get(Keys.MEMO_LIST, (error, data) => {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
       data.list.forEach((memo) => {
-        memoWindowList.push(new BrowserWindow({}));
+        memoWindowList.push(new BrowserWindow(windowSize.MEMO));
       });
     }
   });
