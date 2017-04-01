@@ -6,7 +6,11 @@ import * as Keys from './constants/storage';
 import windowSize from './constants/browser-window';
 
 app.on('ready', () => {
+  // Listen from initialWindow
   ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
+  });
+  ipcMain.on(IPCMessage.EXIT_APP, () => {
+    app.exit();
   });
   const initialWindow = new BrowserWindow(windowSize.INITIAL);
   const memoWindowList = [];
