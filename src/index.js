@@ -10,9 +10,10 @@ app.on('ready', () => {
 
   // Listen from initialWindow
   ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
-    const newMemo = new BrowserWindow(windowSize.MEMO);
-    memoWindowList.push(newMemo);
-    newMemo.show();
+    const newMemoWindow = new BrowserWindow(windowSize.MEMO);
+    memoWindowList.push(newMemoWindow);
+    newMemoWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/memo/index.html`);
+    newMemoWindow.show();
   });
   ipcMain.on(IPCMessage.EXIT_APP, () => {
     app.exit();
@@ -23,7 +24,9 @@ app.on('ready', () => {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
       data.list.forEach((memo) => {
-        memoWindowList.push(new BrowserWindow(windowSize.MEMO));
+        const memoWindow = new BrowserWindow(windowSize.MEMO);
+        memoWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/memo/index.html`);
+        memoWindowList.push(memoWindow);
       });
     }
   });

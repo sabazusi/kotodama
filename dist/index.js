@@ -31,9 +31,10 @@ _electron.app.on('ready', function () {
 
   // Listen from initialWindow
   _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
-    var newMemo = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
-    memoWindowList.push(newMemo);
-    newMemo.show();
+    var newMemoWindow = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
+    memoWindowList.push(newMemoWindow);
+    newMemoWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/memo/index.html');
+    newMemoWindow.show();
   });
   _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
     _electron.app.exit();
@@ -44,7 +45,9 @@ _electron.app.on('ready', function () {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
       data.list.forEach(function (memo) {
-        memoWindowList.push(new _electron.BrowserWindow(_browserWindow2.default.MEMO));
+        var memoWindow = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
+        memoWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/memo/index.html');
+        memoWindowList.push(memoWindow);
       });
     }
   });
