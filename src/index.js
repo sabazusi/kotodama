@@ -23,7 +23,7 @@ app.on('ready', () => {
   storage.get(Keys.MEMO_LIST, (error, data) => {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
-      data.list.forEach((memo) => {
+      data.list.forEach(() => {
         const memoWindow = new BrowserWindow(windowSize.MEMO);
         memoWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/memo/index.html`);
         memoWindowList.push(memoWindow);

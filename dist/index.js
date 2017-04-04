@@ -44,7 +44,7 @@ _electron.app.on('ready', function () {
   _electronJsonStorage2.default.get(Keys.MEMO_LIST, function (error, data) {
     if (error) throw new Error('Application Initialize Error: please restart application.');
     if (data && data.list) {
-      data.list.forEach(function (memo) {
+      data.list.forEach(function () {
         var memoWindow = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
         memoWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/memo/index.html');
         memoWindowList.push(memoWindow);
