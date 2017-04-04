@@ -1,4 +1,4 @@
-class WindowList {
+class ApplicationWindows {
   constructor() {
     this.initialWindow = null;
     this.memoWindowList = [];
@@ -24,4 +24,4 @@ class WindowList {
     });
   }
 }
-export default new WindowList();
+export default new ApplicationWindows();
