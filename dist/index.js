@@ -10,6 +10,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _applicationWindows = require('./windows/application-windows');
+
+var _applicationWindows2 = _interopRequireDefault(_applicationWindows);
+
 var _ipcMessage = require('./constants/ipc-message');
 
 var IPCMessage = _interopRequireWildcard(_ipcMessage);

@@ -1,7 +1,21 @@
+import { app, ipcMain } from 'electron';
+import * as IPCMessage from '../constants/ipc-message';
+
 class ApplicationWindows {
   constructor() {
     this.initialWindow = null;
     this.memoWindowList = [];
+  }
+
+  initializeEvents() {
+    ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
+      // create memo
+      this.memoWindowList.push();
+    });
+    ipcMain.on(IPCMessage.EXIT_APP, () => {
+      // create memo
+      app.exit();
+    });
   }
 
   addMemoWindow() {
