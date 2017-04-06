@@ -10,8 +10,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 (function () {
   var createButton = document.getElementById('create');
+  var exitButton = document.getElementById('exit');
+
   createButton.addEventListener('click', function () {
     _electron.ipcRenderer.send(IPCMessage.CREATE_INITIAL_MEMO);
+  });
+  exitButton.addEventListener('click', function () {
+    _electron.ipcRenderer.send(IPCMessage.EXIT_APP);
   });
 })();
 // TODO: fix path...
