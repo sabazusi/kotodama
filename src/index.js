@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import storage from 'electron-json-storage';
 import path from 'path';
-import ApplicationWindows from './windows/application-windows';
 import * as IPCMessage from './constants/ipc-message';
 import * as Keys from './constants/storage';
 import windowSize from './constants/browser-window';
