@@ -10,10 +10,6 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _applicationWindows = require('./windows/application-windows');
-
-var _applicationWindows2 = _interopRequireDefault(_applicationWindows);
-
 var _ipcMessage = require('./constants/ipc-message');
 
 var IPCMessage = _interopRequireWildcard(_ipcMessage);
@@ -37,7 +33,7 @@ _electron.app.on('ready', function () {
   _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
     var newMemoWindow = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
     memoWindowList.push(newMemoWindow);
-    newMemoWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/memo/index.html');
+    newMemoWindow.loadURL('file://' + __dirname + '/windows/memo/index.html');
     newMemoWindow.show();
   });
   _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
@@ -50,12 +46,12 @@ _electron.app.on('ready', function () {
     if (data && data.list) {
       data.list.forEach(function () {
         var memoWindow = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
-        memoWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/memo/index.html');
+        memoWindow.loadURL('file://' + __dirname + '/windows/memo/index.html');
         memoWindowList.push(memoWindow);
       });
     }
   });
 
-  initialWindow.loadURL('file://' + _path2.default.resolve(__dirname, '../') + '/templates/initial/index.html');
+  initialWindow.loadURL('file://' + __dirname + '/windows/initial/index.html');
   initialWindow.show();
 });

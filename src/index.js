@@ -12,7 +12,7 @@ app.on('ready', () => {
   ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
     const newMemoWindow = new BrowserWindow(windowSize.MEMO);
     memoWindowList.push(newMemoWindow);
-    newMemoWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/memo/index.html`);
+    newMemoWindow.loadURL(`file://${__dirname}/windows/memo/index.html`);
     newMemoWindow.show();
   });
   ipcMain.on(IPCMessage.EXIT_APP, () => {
@@ -25,12 +25,12 @@ app.on('ready', () => {
     if (data && data.list) {
       data.list.forEach(() => {
         const memoWindow = new BrowserWindow(windowSize.MEMO);
-        memoWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/memo/index.html`);
+        memoWindow.loadURL(`file://${__dirname}/windows/memo/index.html`);
         memoWindowList.push(memoWindow);
       });
     }
   });
 
-  initialWindow.loadURL(`file://${path.resolve(__dirname, '../')}/templates/initial/index.html`);
+  initialWindow.loadURL(`file://${__dirname}/windows/initial/index.html`);
   initialWindow.show();
 });
