@@ -4,8 +4,9 @@
   "description": "(*´ω｀*)",
   "main": "dist/index.js",
   "scripts": {
+    "copy-files": "cpx 'src/**/*.{css,html}' dist",
     "start": "electron dist/index.js",
-    "build": "babel src -d dist",
+    "build": "npm run copy-files && babel src -d dist",
     "lint": "eslint src",
     "flow": "flow",
     "flow-typed": "flow-typed install"
@@ -25,6 +26,7 @@
     "babel-eslint": "^7.2.1",
     "babel-preset-es2017": "^6.22.0",
     "babel-preset-latest": "^6.24.0",
+    "cpx": "^1.5.0",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-flowtype": "^2.30.4",
