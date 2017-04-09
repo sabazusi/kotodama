@@ -50,13 +50,12 @@ export default class ApplicationWindows {
     }
   }
 
-  removeMemoWindow(id) {
-    return new Promise((resolve) => {
-      const target = this.memoWindowList.find(memo => memo.id === id);
-      target.window.hide();
-      target.window.destroy();
+  closeMemoWindow(id) {
+    const target = this.memoWindowList.find(memo => memo.id === id);
+    if (target) {
+      target.destroy();
       this.memoWindowList = this.memoWindowList.filter(memo => memo.id !== id);
-      resolve(id);
-    });
+      this.toggleWindowsVisibility();
+    }
   }
 }

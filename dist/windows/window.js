@@ -27,10 +27,10 @@ var Window = function () {
       templatePath = 'file://' + __dirname + '/initial/index.html';
     } else {
       this.window = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
-      templatePath = 'file://' + __dirname + '/memo/index.html';
+      templatePath = 'file://' + __dirname + '/memo/index.html?id=' + id;
     }
 
-    this.window.loadURL(templatePath);
+    this.window.loadURL(templatePath, { hoge: 123 });
   }
 
   _createClass(Window, [{
@@ -41,6 +41,11 @@ var Window = function () {
       } else {
         this.window.hide();
       }
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.window.destroy();
     }
   }]);
 

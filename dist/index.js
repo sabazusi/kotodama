@@ -6,10 +6,6 @@ var _ipcMessage = require('./constants/ipc-message');
 
 var IPCMessage = _interopRequireWildcard(_ipcMessage);
 
-var _storage = require('./constants/storage');
-
-var Keys = _interopRequireWildcard(_storage);
-
 var _windowController = require('./windows/window-controller');
 
 var _windowController2 = _interopRequireDefault(_windowController);
@@ -25,6 +21,11 @@ _electron.app.on('ready', function () {
   _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
     return windowController.addMemoWindow();
   });
+
+  _electron.ipcMain.on(IPCMessage.CLOSE_MEMO, function (event, id) {
+    return windowController.closeMemoWindow(id);
+  });
+
   _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
     return _electron.app.exit();
   });

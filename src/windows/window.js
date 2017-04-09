@@ -14,10 +14,10 @@ export default class Window {
       templatePath = `file://${__dirname}/initial/index.html`;
     } else {
       this.window = new BrowserWindow(windowSize.MEMO);
-      templatePath = `file://${__dirname}/memo/index.html`;
+      templatePath = `file://${__dirname}/memo/index.html?id=${id}`;
     }
 
-    this.window.loadURL(templatePath);
+    this.window.loadURL(templatePath, { hoge: 123 });
   }
 
   toggleVisibility(isVisible: boolean) {
@@ -26,5 +26,9 @@ export default class Window {
     } else {
       this.window.hide();
     }
+  }
+
+  destroy() {
+    this.window.destroy();
   }
 }

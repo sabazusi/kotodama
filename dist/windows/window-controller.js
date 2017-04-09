@@ -80,21 +80,18 @@ var ApplicationWindows = function () {
       }
     }
   }, {
-    key: 'removeMemoWindow',
-    value: function removeMemoWindow(id) {
-      var _this3 = this;
-
-      return new Promise(function (resolve) {
-        var target = _this3.memoWindowList.find(function (memo) {
-          return memo.id === id;
-        });
-        target.window.hide();
-        target.window.destroy();
-        _this3.memoWindowList = _this3.memoWindowList.filter(function (memo) {
+    key: 'closeMemoWindow',
+    value: function closeMemoWindow(id) {
+      var target = this.memoWindowList.find(function (memo) {
+        return memo.id === id;
+      });
+      if (target) {
+        target.destroy();
+        this.memoWindowList = this.memoWindowList.filter(function (memo) {
           return memo.id !== id;
         });
-        resolve(id);
-      });
+        this.toggleWindowsVisibility();
+      }
     }
   }]);
 
