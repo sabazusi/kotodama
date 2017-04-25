@@ -2,3 +2,11 @@ body {
   background-color: #df9;
   -webkit-app-region: drag;
 }
+
+#memoInput {
+  background-color: #f4eca9;
+  border: none;
+  resize: none;
+  width: 90%;
+  height: 30%;
+}

@@ -17,7 +17,7 @@ export default class Window {
       templatePath = `file://${__dirname}/memo/index.html?id=${id}`;
     }
 
-    this.window.loadURL(templatePath, { hoge: 123 });
+    this.window.loadURL(templatePath);
   }
 
   toggleVisibility(isVisible: boolean) {
