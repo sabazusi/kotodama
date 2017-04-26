@@ -19,13 +19,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var memo = document.getElementById('memo');
   var memoInput = document.getElementById('memoInput');
   var windowId = parseInt(_url2.default.parse(location.href, true).query.id, 10);
-  memo.innerHTML = 'ここにメモを入力してください';
   memoInput.style.display = 'none';
-  closeButton.addEventListener('click', function () {
-    return _electron.ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId);
-  });
   memo.addEventListener('dblclick', function () {
     memo.style.display = 'none';
     memoInput.style.display = 'block';
   });
+  // IPC Events
+  closeButton.addEventListener('click', function () {
+    return _electron.ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId);
+  });
+  _electron.ipcRenderer.on(IPCMessage.SHOW_MEMO, function (event, text) {
+    memo.innerHTML = text || 'ここにメモを入力してください';
+  });
+
+  _electron.ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
 })();

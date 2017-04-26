@@ -1,7 +1,14 @@
 // @flow
 
-import { BrowserWindow } from 'electron';
+import { ipcMain, BrowserWindow } from 'electron';
+import * as IPCMessage from '../constants/ipc-message';
 import windowSize from '../constants/browser-window';
+
+type RendererEvent = {
+  sender: {
+    send: (type: string, ...args: *) => void;
+  }
+};
 
 export default class Window {
   id: number;
@@ -16,6 +23,9 @@ export default class Window {
       this.window = new BrowserWindow(windowSize.MEMO);
       templatePath = `file://${__dirname}/memo/index.html?id=${id}`;
     }
+    ipcMain.on(IPCMessage.MEMO_INITIALIZED, (event: RendererEvent) => {
+      event.sender.send(IPCMessage.SHOW_MEMO, '');
+    });
 
     this.window.loadURL(templatePath);
   }
