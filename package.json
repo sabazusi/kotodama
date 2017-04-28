@@ -8,6 +8,7 @@
     "start": "electron dist/index.js",
     "build": "npm run copy-files && babel src -d dist",
     "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
     "flow": "flow",
     "flow-typed": "flow-typed install"
   },
