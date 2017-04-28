@@ -15,6 +15,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
+  var currentText = '';
   var closeButton = document.getElementById('close');
   var memo = document.getElementById('memo');
   var memoInput = document.getElementById('memoInput');
@@ -23,13 +24,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   memo.addEventListener('dblclick', function () {
     memo.style.display = 'none';
     memoInput.style.display = 'block';
+    memoInput.value = currentText;
+    memoInput.focus();
   });
+
   // IPC Events
   closeButton.addEventListener('click', function () {
     return _electron.ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId);
   });
   _electron.ipcRenderer.on(IPCMessage.SHOW_MEMO, function (event, text) {
-    memo.innerHTML = text || 'ここにメモを入力してください';
+    currentText = text;
+    memo.innerHTML = text || 'ダブルクリックでメモを入力';
   });
 
   _electron.ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);

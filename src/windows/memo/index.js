@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import * as IPCMessage from '../../constants/ipc-message';
 
 (() => {
+  let currentText = '';
   const closeButton = document.getElementById('close');
   const memo = document.getElementById('memo');
   const memoInput = document.getElementById('memoInput');
@@ -11,11 +12,15 @@ import * as IPCMessage from '../../constants/ipc-message';
   memo.addEventListener('dblclick', () => {
     memo.style.display = 'none';
     memoInput.style.display = 'block';
+    memoInput.value = currentText;
+    memoInput.focus();
   });
+
   // IPC Events
   closeButton.addEventListener('click', () => ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId));
   ipcRenderer.on(IPCMessage.SHOW_MEMO, (event, text) => {
-    memo.innerHTML = text || 'ここにメモを入力してください';
+    currentText = text;
+    memo.innerHTML = text || 'ダブルクリックでメモを入力';
   });
 
   ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
