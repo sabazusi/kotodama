@@ -14,9 +14,12 @@ export default class Window {
   id: number;
   window: BrowserWindow;
   content: string;
-  constructor(id: number, type: string, content: string = '') {
+  onChange: (id: number, content: string) => void;
+
+  constructor(id: number, type: string, content: string = '', onChangeContent: (id: number, content: string) => void = () => {}) {
     this.id = id;
     this.content = content;
+    this.onChange = onChangeContent;
     let templatePath;
     if (type === 'initial') {
       this.window = new BrowserWindow(windowSize.INITIAL);
@@ -38,7 +41,7 @@ export default class Window {
 
   updateMemoContent(content: string) {
     this.content = content;
-    // todo: save on storage
+    this.onChange(this.id, this.content);
   }
 
   toggleVisibility(isVisible: boolean) {

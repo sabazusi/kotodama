@@ -10,6 +10,8 @@ var _electron = require('electron');
 
 var _storage = require('../utils/storage');
 
+var _storage2 = _interopRequireDefault(_storage);
+
 var _ipcMessage = require('../constants/ipc-message');
 
 var IPCMessage = _interopRequireWildcard(_ipcMessage);
@@ -18,9 +20,9 @@ var _window = require('./window');
 
 var _window2 = _interopRequireDefault(_window);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31,15 +33,18 @@ var WINDOW_TYPE = {
 
 var ApplicationWindows = function () {
   function ApplicationWindows() {
+    var _this = this;
+
     _classCallCheck(this, ApplicationWindows);
 
     this.initialWindow = new _window2.default(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
+    this.storage = new _storage2.default();
 
     // restore windows from local storage
-    (0, _storage.restore)(function (data) {
-      data.memoList.map(function (memoData) {
-        console.log(memoData.content);
+    this.storage.restore(function (data) {
+      data.memoList.map(function (memo) {
+        return _this.memoWindowList.push(new _window2.default(memo.id, WINDOW_TYPE.MEMO, memo.content, _this.onUpdateMemoContent.bind(_this)));
       });
     });
   }
@@ -47,11 +52,11 @@ var ApplicationWindows = function () {
   _createClass(ApplicationWindows, [{
     key: 'initializeEvents',
     value: function initializeEvents() {
-      var _this = this;
+      var _this2 = this;
 
       _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
         // create memo
-        _this.memoWindowList.push();
+        _this2.memoWindowList.push();
       });
       _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
         // create memo
@@ -61,16 +66,16 @@ var ApplicationWindows = function () {
   }, {
     key: 'start',
     value: function start() {
-      var _this2 = this;
+      var _this3 = this;
 
       setTimeout(function () {
-        return _this2.toggleWindowsVisibility();
+        return _this3.toggleWindowsVisibility();
       }, 1000);
     }
   }, {
     key: 'addMemoWindow',
     value: function addMemoWindow() {
-      this.memoWindowList.push(new _window2.default(new Date().getTime(), WINDOW_TYPE.MEMO, ''));
+      this.memoWindowList.push(new _window2.default(new Date().getTime(), WINDOW_TYPE.MEMO, '', this.onUpdateMemoContent.bind(this)));
       this.toggleWindowsVisibility();
     }
   }, {
@@ -87,6 +92,11 @@ var ApplicationWindows = function () {
           return memoWindow.toggleVisibility(false);
         });
       }
+    }
+  }, {
+    key: 'onUpdateMemoContent',
+    value: function onUpdateMemoContent(id, content) {
+      this.storage.saveMemo(id, content);
     }
   }, {
     key: 'closeMemoWindow',

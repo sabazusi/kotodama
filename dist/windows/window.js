@@ -27,11 +27,13 @@ var Window = function () {
     var _this = this;
 
     var content = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var onChangeContent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
 
     _classCallCheck(this, Window);
 
     this.id = id;
     this.content = content;
+    this.onChange = onChangeContent;
     var templatePath = void 0;
     if (type === 'initial') {
       this.window = new _electron.BrowserWindow(_browserWindow2.default.INITIAL);
@@ -55,7 +57,7 @@ var Window = function () {
     key: 'updateMemoContent',
     value: function updateMemoContent(content) {
       this.content = content;
-      // todo: save on storage
+      this.onChange(this.id, this.content);
     }
   }, {
     key: 'toggleVisibility',

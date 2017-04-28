@@ -1,10 +1,10 @@
 // @flow
 
 import { app, ipcMain } from 'electron';
-import { restore } from '../utils/storage';
+import Storage from '../utils/storage';
 import * as IPCMessage from '../constants/ipc-message';
 import Window from './window';
-import type { Data, MemoData } from '../utils/storage';
+import type { Data } from '../utils/storage';
 
 const WINDOW_TYPE = {
   INITIAL: 'initial',
@@ -14,14 +14,21 @@ const WINDOW_TYPE = {
 export default class ApplicationWindows {
   initialWindow: Window;
   memoWindowList: Array<Window>;
-  memoWindowDataCache: Array<MemoData>;
+  storage: Storage;
   constructor() {
     this.initialWindow = new Window(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
-    this.memoWindowDataCache = [];
+    this.storage = new Storage();
 
     // restore windows from local storage
-    restore((data: Data) => this.memoWindowDataCache = data.memoList);
+    this.storage.restore((data: Data) => {
+      data.memoList.map(memo => this.memoWindowList.push(new Window(
+        memo.id,
+        WINDOW_TYPE.MEMO,
+        memo.content,
+        this.onUpdateMemoContent.bind(this),
+      )));
+    });
   }
 
   initializeEvents() {
@@ -44,6 +51,7 @@ export default class ApplicationWindows {
       new Date().getTime(),
       WINDOW_TYPE.MEMO,
       '',
+      this.onUpdateMemoContent.bind(this),
     ));
     this.toggleWindowsVisibility();
   }
@@ -58,11 +66,9 @@ export default class ApplicationWindows {
     }
   }
 
-  onUpdateMemoContent = (id: number, content: string) => {
-    this.memoWindowDataCache = this.memoWindowDataCache.map((memo) => {
-      memo.id === id ? { id, content } : memo;
-    });
-  };
+  onUpdateMemoContent(id: number, content: string) {
+    this.storage.saveMemo(id, content);
+  }
 
   closeMemoWindow(id: number) {
     const target = this.memoWindowList.find(memo => memo.id === id);
