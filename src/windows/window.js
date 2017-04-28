@@ -13,8 +13,10 @@ type RendererEvent = {
 export default class Window {
   id: number;
   window: BrowserWindow;
-  constructor(id: number, type: string) {
+  content: string;
+  constructor(id: number, type: string, content: string = '') {
     this.id = id;
+    this.content = content;
     let templatePath;
     if (type === 'initial') {
       this.window = new BrowserWindow(windowSize.INITIAL);
@@ -24,10 +26,19 @@ export default class Window {
       templatePath = `file://${__dirname}/memo/index.html?id=${id}`;
     }
     ipcMain.on(IPCMessage.MEMO_INITIALIZED, (event: RendererEvent) => {
-      event.sender.send(IPCMessage.SHOW_MEMO, '');
+      event.sender.send(IPCMessage.SHOW_MEMO, this.content);
+    });
+
+    ipcMain.on(IPCMessage.UPDATE_CONTENT, (event: RendererEvent, content: string) => {
+      this.updateMemoContent(content);
     });
 
     this.window.loadURL(templatePath);
+  }
+
+  updateMemoContent(content: string) {
+    this.content = content;
+    // todo: save on storage
   }
 
   toggleVisibility(isVisible: boolean) {

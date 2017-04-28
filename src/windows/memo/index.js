@@ -15,6 +15,9 @@ import * as IPCMessage from '../../constants/ipc-message';
     memoInput.value = currentText;
     memoInput.focus();
   });
+  memoInput.addEventListener('change', (event) => {
+    ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
+  });
 
   // IPC Events
   closeButton.addEventListener('click', () => ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId));

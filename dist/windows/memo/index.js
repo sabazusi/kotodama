@@ -27,6 +27,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     memoInput.value = currentText;
     memoInput.focus();
   });
+  memoInput.addEventListener('change', function (event) {
+    _electron.ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
+  });
 
   // IPC Events
   closeButton.addEventListener('click', function () {
