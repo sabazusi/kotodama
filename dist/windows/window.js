@@ -24,9 +24,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Window = function () {
   function Window(id, type) {
+    var _this = this;
+
+    var content = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
     _classCallCheck(this, Window);
 
     this.id = id;
+    this.content = content;
     var templatePath = void 0;
     if (type === 'initial') {
       this.window = new _electron.BrowserWindow(_browserWindow2.default.INITIAL);
@@ -36,17 +41,23 @@ var Window = function () {
       templatePath = 'file://' + __dirname + '/memo/index.html?id=' + id;
     }
     _electron.ipcMain.on(IPCMessage.MEMO_INITIALIZED, function (event) {
-      event.sender.send(IPCMessage.SHOW_MEMO, '');
+      event.sender.send(IPCMessage.SHOW_MEMO, _this.content);
     });
 
     _electron.ipcMain.on(IPCMessage.UPDATE_CONTENT, function (event, content) {
-      console.log(content);
+      _this.updateMemoContent(content);
     });
 
     this.window.loadURL(templatePath);
   }
 
   _createClass(Window, [{
+    key: 'updateMemoContent',
+    value: function updateMemoContent(content) {
+      this.content = content;
+      // todo: save on storage
+    }
+  }, {
     key: 'toggleVisibility',
     value: function toggleVisibility(isVisible) {
       if (isVisible) {

@@ -1,8 +1,10 @@
 // @flow
 
 import { app, ipcMain } from 'electron';
+import { restore } from '../utils/storage';
 import * as IPCMessage from '../constants/ipc-message';
 import Window from './window';
+import type { Data, MemoData } from '../utils/storage';
 
 const WINDOW_TYPE = {
   INITIAL: 'initial',
@@ -12,9 +14,14 @@ const WINDOW_TYPE = {
 export default class ApplicationWindows {
   initialWindow: Window;
   memoWindowList: Array<Window>;
+  memoWindowDataCache: Array<MemoData>;
   constructor() {
     this.initialWindow = new Window(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
+    this.memoWindowDataCache = [];
+
+    // restore windows from local storage
+    restore((data: Data) => this.memoWindowDataCache = data.memoList);
   }
 
   initializeEvents() {
@@ -35,8 +42,9 @@ export default class ApplicationWindows {
   addMemoWindow() {
     this.memoWindowList.push(new Window(
       new Date().getTime(),
-      WINDOW_TYPE.MEMO),
-    );
+      WINDOW_TYPE.MEMO,
+      '',
+    ));
     this.toggleWindowsVisibility();
   }
 
@@ -50,7 +58,13 @@ export default class ApplicationWindows {
     }
   }
 
-  closeMemoWindow(id) {
+  onUpdateMemoContent = (id: number, content: string) => {
+    this.memoWindowDataCache = this.memoWindowDataCache.map((memo) => {
+      memo.id === id ? { id, content } : memo;
+    });
+  };
+
+  closeMemoWindow(id: number) {
     const target = this.memoWindowList.find(memo => memo.id === id);
     if (target) {
       target.destroy();

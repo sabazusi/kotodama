@@ -8,6 +8,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _electron = require('electron');
 
+var _storage = require('../utils/storage');
+
 var _ipcMessage = require('../constants/ipc-message');
 
 var IPCMessage = _interopRequireWildcard(_ipcMessage);
@@ -33,6 +35,13 @@ var ApplicationWindows = function () {
 
     this.initialWindow = new _window2.default(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
+
+    // restore windows from local storage
+    (0, _storage.restore)(function (data) {
+      data.memoList.map(function (memoData) {
+        console.log(memoData.content);
+      });
+    });
   }
 
   _createClass(ApplicationWindows, [{
@@ -61,7 +70,7 @@ var ApplicationWindows = function () {
   }, {
     key: 'addMemoWindow',
     value: function addMemoWindow() {
-      this.memoWindowList.push(new _window2.default(new Date().getTime(), WINDOW_TYPE.MEMO));
+      this.memoWindowList.push(new _window2.default(new Date().getTime(), WINDOW_TYPE.MEMO, ''));
       this.toggleWindowsVisibility();
     }
   }, {
