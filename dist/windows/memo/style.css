@@ -4,6 +4,7 @@ body {
 }
 
 #memoInput {
+  -webkit-app-region: no-drag;
   background-color: #f4eca9;
   border: none;
   resize: none;
