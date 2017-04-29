@@ -113,6 +113,7 @@ var ApplicationWindows = function () {
         });
         this.toggleWindowsVisibility();
       }
+      this.storage.removeMemo(id);
     }
   }]);
 

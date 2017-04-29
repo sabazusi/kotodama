@@ -43,6 +43,14 @@ var Storage = function () {
       _electronJsonStorage2.default.set(StorageKeys.MEMO_LIST, this.dataCache);
     }
   }, {
+    key: 'removeMemo',
+    value: function removeMemo(id) {
+      this.dataCache.memoList = this.dataCache.memoList.filter(function (memo) {
+        return memo.id !== id;
+      });
+      _electronJsonStorage2.default.set(StorageKeys.MEMO_LIST, this.dataCache);
+    }
+  }, {
     key: 'restore',
     value: function restore(callback) {
       var _this = this;

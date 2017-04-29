@@ -79,5 +79,6 @@ export default class ApplicationWindows {
       this.memoWindowList = this.memoWindowList.filter(memo => memo.id !== id);
       this.toggleWindowsVisibility();
     }
+    this.storage.removeMemo(id);
   }
 }

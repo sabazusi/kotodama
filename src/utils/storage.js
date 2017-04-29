@@ -30,6 +30,11 @@ export default class Storage {
     storage.set(StorageKeys.MEMO_LIST, this.dataCache);
   }
 
+  removeMemo(id: number) {
+    this.dataCache.memoList = this.dataCache.memoList.filter((memo: MemoData) => memo.id !== id);
+    storage.set(StorageKeys.MEMO_LIST, this.dataCache);
+  }
+
   restore(callback: (data: Data) => void) {
     storage.get(StorageKeys.MEMO_LIST, (error, data: Data) => {
       if (error) throw new Error('Storage access error! Please restart application.');
