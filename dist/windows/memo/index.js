@@ -22,16 +22,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var memoInput = document.getElementById('memoInput');
   var windowId = parseInt(_url2.default.parse(location.href, true).query.id, 10);
   memoInput.style.display = 'none';
-  memo.addEventListener('dblclick', function () {
-    memo.style.display = 'none';
-    memoInput.style.display = 'block';
-    memoInput.value = currentText;
-    memoInput.focus();
-  });
 
-  // IPC Events
+  var toggleMemoStatus = function toggleMemoStatus(isInputActive) {
+    memo.style.display = isInputActive ? 'none' : 'block';
+    memoInput.style.display = isInputActive ? 'block' : 'none';
+    memo.innerHTML = currentText || 'ダブルクリックでメモを入力';
+    memoInput.value = currentText;
+    if (isInputActive) {
+      memoInput.focus();
+    } else {
+      memo.focus();
+    }
+  };
+
+  // DOM Events
+  memo.addEventListener('dblclick', function () {
+    return toggleMemoStatus(true);
+  });
   memoInput.addEventListener('change', function (event) {
+    currentText = event.currentTarget.value;
     _electron.ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
+  });
+  memoInput.addEventListener('blur', function () {
+    return toggleMemoStatus(false);
   });
   closeButton.addEventListener('click', function () {
     return _electron.ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId);
@@ -40,6 +53,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     return _electron.ipcRenderer.send(IPCMessage.ADD_MEMO);
   });
 
+  // IPC Events
   _electron.ipcRenderer.on(IPCMessage.SHOW_MEMO, function (event, text) {
     currentText = text;
     memo.innerHTML = text || 'ダブルクリックでメモを入力';
