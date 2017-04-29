@@ -40,6 +40,7 @@ var ApplicationWindows = function () {
     this.initialWindow = new _window2.default(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
     this.storage = new _storage2.default();
+    this.initializeEvents();
 
     // restore windows from local storage
     this.storage.restore(function (data) {
@@ -54,13 +55,11 @@ var ApplicationWindows = function () {
     value: function initializeEvents() {
       var _this2 = this;
 
-      _electron.ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, function () {
-        // create memo
-        _this2.memoWindowList.push();
+      _electron.ipcMain.on(IPCMessage.ADD_MEMO, function () {
+        return _this2.addMemoWindow();
       });
       _electron.ipcMain.on(IPCMessage.EXIT_APP, function () {
-        // create memo
-        _electron.app.exit();
+        return _electron.app.exit();
       });
     }
   }, {

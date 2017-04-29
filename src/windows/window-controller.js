@@ -19,6 +19,7 @@ export default class ApplicationWindows {
     this.initialWindow = new Window(0, WINDOW_TYPE.INITIAL);
     this.memoWindowList = [];
     this.storage = new Storage();
+    this.initializeEvents();
 
     // restore windows from local storage
     this.storage.restore((data: Data) => {
@@ -32,14 +33,8 @@ export default class ApplicationWindows {
   }
 
   initializeEvents() {
-    ipcMain.on(IPCMessage.CREATE_INITIAL_MEMO, () => {
-      // create memo
-      this.memoWindowList.push();
-    });
-    ipcMain.on(IPCMessage.EXIT_APP, () => {
-      // create memo
-      app.exit();
-    });
+    ipcMain.on(IPCMessage.ADD_MEMO, () => this.addMemoWindow());
+    ipcMain.on(IPCMessage.EXIT_APP, () => app.exit());
   }
 
   start() {

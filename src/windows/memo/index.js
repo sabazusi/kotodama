@@ -4,6 +4,7 @@ import * as IPCMessage from '../../constants/ipc-message';
 
 (() => {
   let currentText = '';
+  const addButton = document.getElementById('add');
   const closeButton = document.getElementById('close');
   const memo = document.getElementById('memo');
   const memoInput = document.getElementById('memoInput');
@@ -15,16 +16,19 @@ import * as IPCMessage from '../../constants/ipc-message';
     memoInput.value = currentText;
     memoInput.focus();
   });
+
+  // IPC Events
   memoInput.addEventListener('change', (event) => {
     ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
   });
-
-  // IPC Events
   closeButton.addEventListener('click', () => ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId));
+  addButton.addEventListener('click', () => ipcRenderer.send(IPCMessage.ADD_MEMO));
+
   ipcRenderer.on(IPCMessage.SHOW_MEMO, (event, text) => {
     currentText = text;
     memo.innerHTML = text || 'ダブルクリックでメモを入力';
   });
 
+  // start window
   ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
 })();

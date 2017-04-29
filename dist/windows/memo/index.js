@@ -16,6 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 (function () {
   var currentText = '';
+  var addButton = document.getElementById('add');
   var closeButton = document.getElementById('close');
   var memo = document.getElementById('memo');
   var memoInput = document.getElementById('memoInput');
@@ -27,18 +28,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     memoInput.value = currentText;
     memoInput.focus();
   });
+
+  // IPC Events
   memoInput.addEventListener('change', function (event) {
     _electron.ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
   });
-
-  // IPC Events
   closeButton.addEventListener('click', function () {
     return _electron.ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId);
   });
+  addButton.addEventListener('click', function () {
+    return _electron.ipcRenderer.send(IPCMessage.ADD_MEMO);
+  });
+
   _electron.ipcRenderer.on(IPCMessage.SHOW_MEMO, function (event, text) {
     currentText = text;
     memo.innerHTML = text || 'ダブルクリックでメモを入力';
   });
 
+  // start window
   _electron.ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
 })();
