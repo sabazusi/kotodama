@@ -32,11 +32,15 @@ var Storage = function () {
   _createClass(Storage, [{
     key: 'saveMemo',
     value: function saveMemo(id, content) {
-      var memoDataCache = this.dataCache.memoList.map(function (memo) {
-        return memo.id === id ? { id: id, content: content } : memo;
+      var targetIndex = this.dataCache.memoList.findIndex(function (memo) {
+        return memo.id === id;
       });
-      _electronJsonStorage2.default.set(StorageKeys.MEMO_LIST, { memoList: memoDataCache });
-      console.log('save');
+      if (targetIndex > -1) {
+        this.dataCache.memoList[targetIndex] = { id: id, content: content };
+      } else {
+        this.dataCache.memoList.push({ id: id, content: content });
+      }
+      _electronJsonStorage2.default.set(StorageKeys.MEMO_LIST, this.dataCache);
     }
   }, {
     key: 'restore',

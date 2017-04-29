@@ -75,7 +75,9 @@ var ApplicationWindows = function () {
   }, {
     key: 'addMemoWindow',
     value: function addMemoWindow() {
-      this.memoWindowList.push(new _window2.default(new Date().getTime(), WINDOW_TYPE.MEMO, '', this.onUpdateMemoContent.bind(this)));
+      var newId = new Date().getTime();
+      this.memoWindowList.push(new _window2.default(newId, WINDOW_TYPE.MEMO, '', this.onUpdateMemoContent.bind(this)));
+      this.storage.saveMemo(newId, '');
       this.toggleWindowsVisibility();
     }
   }, {

@@ -21,9 +21,13 @@ export default class Storage {
   }
 
   saveMemo(id: number, content: string) {
-    const memoDataCache = this.dataCache.memoList.map((memo: MemoData) => memo.id === id ? { id, content } : memo);
-    storage.set(StorageKeys.MEMO_LIST, { memoList: memoDataCache });
-    console.log('save');
+    const targetIndex = this.dataCache.memoList.findIndex((memo: MemoData) => memo.id === id);
+    if (targetIndex > -1) {
+      this.dataCache.memoList[targetIndex] = { id, content };
+    } else {
+      this.dataCache.memoList.push({ id, content });
+    }
+    storage.set(StorageKeys.MEMO_LIST, this.dataCache);
   }
 
   restore(callback: (data: Data) => void) {

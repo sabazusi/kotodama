@@ -47,12 +47,14 @@ export default class ApplicationWindows {
   }
 
   addMemoWindow() {
+    const newId = new Date().getTime();
     this.memoWindowList.push(new Window(
-      new Date().getTime(),
+      newId,
       WINDOW_TYPE.MEMO,
       '',
       this.onUpdateMemoContent.bind(this),
     ));
+    this.storage.saveMemo(newId, '');
     this.toggleWindowsVisibility();
   }
 
