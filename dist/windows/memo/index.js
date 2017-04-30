@@ -14,6 +14,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var bgColors = ['#82e2aa', '#e2abf1', '#f19d9d', '#8ae9e1', '#dce98a', '#a1a6f0', '#e19ce9', '#74c72b', '#acaaaa'];
+
 (function () {
   var currentText = '';
   var addButton = document.getElementById('add');
@@ -21,6 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var memo = document.getElementById('memo');
   var memoInput = document.getElementById('memoInput');
   var windowId = parseInt(_url2.default.parse(location.href, true).query.id, 10);
+  document.body.style.backgroundColor = bgColors[windowId % bgColors.length];
   memoInput.style.display = 'none';
 
   var toggleMemoStatus = function toggleMemoStatus(isInputActive) {

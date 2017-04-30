@@ -2,6 +2,18 @@ import url from 'url';
 import { ipcRenderer } from 'electron';
 import * as IPCMessage from '../../constants/ipc-message';
 
+const bgColors = [
+  '#82e2aa',
+  '#e2abf1',
+  '#f19d9d',
+  '#8ae9e1',
+  '#dce98a',
+  '#a1a6f0',
+  '#e19ce9',
+  '#74c72b',
+  '#acaaaa',
+];
+
 (() => {
   let currentText = '';
   const addButton = document.getElementById('add');
@@ -9,6 +21,7 @@ import * as IPCMessage from '../../constants/ipc-message';
   const memo = document.getElementById('memo');
   const memoInput = document.getElementById('memoInput');
   const windowId = parseInt(url.parse(location.href, true).query.id, 10);
+  document.body.style.backgroundColor = bgColors[windowId % bgColors.length];
   memoInput.style.display = 'none';
 
   const toggleMemoStatus = (isInputActive) => {
