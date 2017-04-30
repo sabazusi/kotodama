@@ -14,7 +14,7 @@ import * as IPCMessage from '../../constants/ipc-message';
   const toggleMemoStatus = (isInputActive) => {
     memo.style.display = isInputActive ? 'none' : 'block';
     memoInput.style.display = isInputActive ? 'block' : 'none';
-    memo.innerHTML = currentText || 'ダブルクリックでメモを入力';
+    memo.innerHTML = currentText.replace(/\n/g, '<br>') || 'ダブルクリックでメモを入力';
     memoInput.value = currentText;
     if (isInputActive) {
       memoInput.focus();
