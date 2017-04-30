@@ -3,15 +3,8 @@
 import storage from 'electron-json-storage';
 import * as StorageKeys from '../constants/storage';
 
-const memoDataCache = [];
+import type { Data, MemoData } from '../types';
 
-export type MemoData = {
-  id: number;
-  content: string;
-};
-export type Data = {
-  memoList: Array<MemoData>;
-};
 
 export default class Storage {
   dataCache: Data;

@@ -4,7 +4,7 @@ import { app, ipcMain } from 'electron';
 import Storage from '../utils/storage';
 import * as IPCMessage from '../constants/ipc-message';
 import Window from './window';
-import type { Data } from '../utils/storage';
+import type { Data } from '../types';
 
 const WINDOW_TYPE = {
   INITIAL: 'initial',

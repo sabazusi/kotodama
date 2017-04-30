@@ -3,12 +3,7 @@
 import { ipcMain, BrowserWindow } from 'electron';
 import * as IPCMessage from '../constants/ipc-message';
 import windowSize from '../constants/browser-window';
-
-type RendererEvent = {
-  sender: {
-    send: (type: string, ...args: *) => void;
-  }
-};
+import type { RendererEvent } from '../types';
 
 export default class Window {
   id: number;
@@ -16,7 +11,12 @@ export default class Window {
   content: string;
   onChange: (id: number, content: string) => void;
 
-  constructor(id: number, type: string, content: string = '', onChangeContent: (id: number, content: string) => void = () => {}) {
+  constructor(
+    id: number,
+    type: string,
+    content: string = '',
+    onChangeContent: (id: number, content: string) => void = () => {},
+  ) {
     this.id = id;
     this.content = content;
     this.onChange = onChangeContent;
@@ -32,8 +32,8 @@ export default class Window {
       event.sender.send(IPCMessage.SHOW_MEMO, this.content);
     });
 
-    ipcMain.on(IPCMessage.UPDATE_CONTENT, (event: RendererEvent, content: string) => {
-      this.updateMemoContent(content);
+    ipcMain.on(IPCMessage.UPDATE_CONTENT, (event: RendererEvent, newContent: string) => {
+      this.updateMemoContent(newContent);
     });
 
     this.window.loadURL(templatePath);

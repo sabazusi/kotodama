@@ -46,8 +46,8 @@ var Window = function () {
       event.sender.send(IPCMessage.SHOW_MEMO, _this.content);
     });
 
-    _electron.ipcMain.on(IPCMessage.UPDATE_CONTENT, function (event, content) {
-      _this.updateMemoContent(content);
+    _electron.ipcMain.on(IPCMessage.UPDATE_CONTENT, function (event, newContent) {
+      _this.updateMemoContent(newContent);
     });
 
     this.window.loadURL(templatePath);
