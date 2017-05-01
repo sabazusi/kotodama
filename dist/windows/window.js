@@ -42,12 +42,12 @@ var Window = function () {
       this.window = new _electron.BrowserWindow(_browserWindow2.default.MEMO);
       templatePath = 'file://' + __dirname + '/memo/index.html?id=' + id;
     }
-    _electron.ipcMain.on(IPCMessage.MEMO_INITIALIZED, function (event) {
-      event.sender.send(IPCMessage.SHOW_MEMO, _this.content);
+    _electron.ipcMain.on(IPCMessage.MEMO_INITIALIZED, function (event, windowId) {
+      if (windowId === _this.id) event.sender.send(IPCMessage.SHOW_MEMO, _this.content);
     });
 
-    _electron.ipcMain.on(IPCMessage.UPDATE_CONTENT, function (event, newContent) {
-      _this.updateMemoContent(newContent);
+    _electron.ipcMain.on(IPCMessage.UPDATE_CONTENT, function (event, windowId, newContent) {
+      if (windowId === _this.id) _this.updateMemoContent(newContent);
     });
 
     this.window.loadURL(templatePath);

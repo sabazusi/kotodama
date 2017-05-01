@@ -44,7 +44,7 @@ var bgColors = ['#82e2aa', '#e2abf1', '#f19d9d', '#8ae9e1', '#dce98a', '#a1a6f0'
   });
   memoInput.addEventListener('change', function (event) {
     currentText = event.currentTarget.value;
-    _electron.ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
+    _electron.ipcRenderer.send(IPCMessage.UPDATE_CONTENT, windowId, event.currentTarget.value);
   });
   memoInput.addEventListener('blur', function () {
     return toggleMemoStatus(false);
@@ -63,5 +63,5 @@ var bgColors = ['#82e2aa', '#e2abf1', '#f19d9d', '#8ae9e1', '#dce98a', '#a1a6f0'
   });
 
   // start window
-  _electron.ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
+  _electron.ipcRenderer.send(IPCMessage.MEMO_INITIALIZED, windowId);
 })();

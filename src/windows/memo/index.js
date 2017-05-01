@@ -40,7 +40,7 @@ const bgColors = [
   memo.addEventListener('dblclick', () => toggleMemoStatus(true));
   memoInput.addEventListener('change', (event) => {
     currentText = event.currentTarget.value;
-    ipcRenderer.send(IPCMessage.UPDATE_CONTENT, event.currentTarget.value);
+    ipcRenderer.send(IPCMessage.UPDATE_CONTENT, windowId, event.currentTarget.value);
   });
   memoInput.addEventListener('blur', () => toggleMemoStatus(false));
   closeButton.addEventListener('click', () => ipcRenderer.send(IPCMessage.CLOSE_MEMO, windowId));
@@ -53,5 +53,5 @@ const bgColors = [
   });
 
   // start window
-  ipcRenderer.send(IPCMessage.MEMO_INITIALIZED);
+  ipcRenderer.send(IPCMessage.MEMO_INITIALIZED, windowId);
 })();

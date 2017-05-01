@@ -28,13 +28,15 @@ export default class Window {
       this.window = new BrowserWindow(windowSize.MEMO);
       templatePath = `file://${__dirname}/memo/index.html?id=${id}`;
     }
-    ipcMain.on(IPCMessage.MEMO_INITIALIZED, (event: RendererEvent) => {
-      event.sender.send(IPCMessage.SHOW_MEMO, this.content);
+    ipcMain.on(IPCMessage.MEMO_INITIALIZED, (event: RendererEvent, windowId: number) => {
+      if (windowId === this.id) event.sender.send(IPCMessage.SHOW_MEMO, this.content);
     });
 
-    ipcMain.on(IPCMessage.UPDATE_CONTENT, (event: RendererEvent, newContent: string) => {
-      this.updateMemoContent(newContent);
-    });
+    ipcMain.on(IPCMessage.UPDATE_CONTENT,
+      (event: RendererEvent, windowId: number, newContent: string) => {
+        if (windowId === this.id) this.updateMemoContent(newContent);
+      },
+    );
 
     this.window.loadURL(templatePath);
   }
